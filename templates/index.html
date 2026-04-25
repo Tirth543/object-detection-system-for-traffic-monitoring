@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Monitoring System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: white; }
+        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid #334155; }
+        .custom-scrollbar::-webkit-scrollbar { height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        .metric-card { background: rgba(15, 23, 42, 0.5); border: 1px solid #1e293b; }
+    </style>
+</head>
+<body class="min-h-screen p-8 flex flex-col items-center">
+
+    <div class="w-full max-w-6xl flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Object Detection System</h1>
+            <p class="text-slate-400 text-sm tracking-widest uppercase mt-1">for Traffic Monitoring</p>
+        </div>
+        <div class="text-right">
+            <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-xs font-bold border border-emerald-500/30">CUDA Accelerated</span>
+        </div>
+    </div>
+
+    <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        
+        <div class="lg:col-span-2 glass-panel rounded-2xl p-6 flex flex-col items-center justify-center min-h-[450px]">
+            <div id="upload-box" class="w-full h-full border-2 border-dashed border-slate-600 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-blue-400 hover:bg-slate-800/50 transition-all">
+                <input type="file" id="mediaInput" class="hidden" accept="image/*,video/*">
+                <div onclick="document.getElementById('mediaInput').click()" class="text-center p-8">
+                    <div class="text-5xl mb-4">📥</div>
+                    <h3 class="font-bold text-xl text-slate-200">Upload Media File</h3>
+                    <p class="text-slate-400 text-sm mt-2">Will monitor Vehicles & Pedestrians instantly</p>
+                </div>
+            </div>
+            <img id="outputImage" class="hidden w-full h-full object-contain rounded-lg" src="">
+        </div>
+
+        <div class="glass-panel rounded-2xl p-6 flex flex-col gap-5">
+            <h2 class="text-lg font-bold text-slate-200 border-b border-slate-700 pb-2">Analytics Dashboard</h2>
+            
+            <div id="stats-area" class="opacity-50 transition-opacity flex flex-col gap-4">
+                
+                <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+                    <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Live Traffic Density</p>
+                    <div class="flex items-end gap-3">
+                        <div id="current-load" class="text-4xl font-extrabold text-blue-400">0</div>
+                        <div class="text-sm text-slate-400 mb-1">objects on screen</div>
+                    </div>
+                    <div id="traffic-status" class="mt-2 text-sm font-bold text-slate-300">Standby</div>
+                </div>
+
+                <div class="flex justify-between items-center bg-slate-800/40 p-3 rounded-lg border border-slate-700/50">
+                    <p class="text-xs text-slate-400 uppercase tracking-wider">Total Cumulative Tracked</p>
+                    <div id="total-count" class="text-2xl font-extrabold text-emerald-400">0</div>
+                </div>
+
+                <div>
+                    <p class="text-xs text-slate-400 uppercase tracking-wider mb-3">Detected Objects Breakdown</p>
+                    <div id="breakdown-list" class="flex flex-col gap-2 text-sm text-slate-300">
+                        <i>Awaiting media stream...</i>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="window.location.reload()" class="mt-auto w-full py-3 bg-slate-700 hover:bg-slate-600 rounded-xl font-bold text-slate-200 transition-colors">Start New Analysis</button>
+        </div>
+    </div>
+
+    <div class="w-full max-w-6xl grid grid-cols-1 gap-6">
+        <div class="glass-panel rounded-2xl p-6">
+            <h2 class="text-lg font-bold text-slate-200 border-b border-slate-700 pb-2 mb-4">Core Engine Specifications</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                    <h3 class="text-xs text-slate-400 uppercase tracking-wider mb-2">Identity</h3>
+                    <p class="text-sm text-slate-200"><span class="text-slate-400">Model:</span> yolov8m</p>
+                    <p class="text-sm text-slate-200"><span class="text-slate-400">Status:</span> Custom-Trained</p>
+                </div>
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                    <h3 class="text-xs text-slate-400 uppercase tracking-wider mb-2">Architecture</h3>
+                    <p class="text-sm text-slate-200"><span class="text-slate-400">Layers:</span> 93 (Fused)</p>
+                    <p class="text-sm text-slate-200"><span class="text-slate-400">Params:</span> 25.8M</p>
+                </div>
+                <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+                    <h3 class="text-xs text-slate-400 uppercase tracking-wider mb-2">Performance</h3>
+                    <p class="text-sm text-slate-200"><span class="text-slate-400">Detection Speed:</span> ~10.5 ms / frame</p>
+                </div>
+            </div>
+
+            <h2 class="text-lg font-bold text-slate-200 border-b border-slate-700 pb-2 mb-4">Validation Metrics</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="metric-card p-6 rounded-xl flex flex-col items-center justify-center">
+                    <h3 class="text-xs text-slate-400 uppercase tracking-widest mb-1">Precision</h3>
+                    <p class="text-3xl font-extrabold text-emerald-400">77.8%</p>
+                </div>
+                <div class="metric-card p-6 rounded-xl flex flex-col items-center justify-center">
+                    <h3 class="text-xs text-slate-400 uppercase tracking-widest mb-1">Recall</h3>
+                    <p class="text-3xl font-extrabold text-emerald-400">61.6%</p>
+                </div>
+                <div class="metric-card p-6 rounded-xl flex flex-col items-center justify-center">
+                    <h3 class="text-xs text-slate-400 uppercase tracking-widest mb-1">F1-Score</h3>
+                    <p class="text-3xl font-extrabold text-emerald-400">68.7%</p>
+                </div>
+                <div class="metric-card p-6 rounded-xl flex flex-col items-center justify-center">
+                    <h3 class="text-xs text-slate-400 uppercase tracking-widest mb-1">mAP@50</h3>
+                    <p class="text-3xl font-extrabold text-emerald-400">67.5%</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const mediaInput = document.getElementById('mediaInput');
+        const uploadBox = document.getElementById('upload-box');
+        const outputImage = document.getElementById('outputImage');
+        const statsArea = document.getElementById('stats-area');
+        let pollingInterval = null;
+
+        mediaInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if(!file) return;
+
+            uploadBox.innerHTML = '<div class="animate-pulse flex flex-col items-center"><div class="w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full animate-spin mb-4"></div><h3 class="text-lg font-bold text-blue-400">Starting Stream...</h3></div>';
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('/upload', { method: 'POST', body: formData });
+                const data = await response.json();
+
+                if(data.media_url) {
+                    uploadBox.classList.add('hidden');
+                    outputImage.classList.remove('hidden');
+                    
+                    outputImage.src = data.media_url + "?t=" + new Date().getTime(); // Prevent image caching
+                    statsArea.classList.remove('opacity-50');
+
+                    if (data.is_video) {
+                        pollingInterval = setInterval(async () => {
+                            const res = await fetch('/live_stats');
+                            const stats = await res.json();
+                            updateDashboard(stats);
+                            
+                            if(stats.status === "Analysis Complete ✅") {
+                                clearInterval(pollingInterval);
+                            }
+                        }, 500);
+                    } else {
+                        updateDashboard(data); // Instant load for images
+                    }
+                }
+            } catch (error) {
+                alert("Upload failed. Check terminal.");
+            }
+        });
+
+        function updateDashboard(data) {
+            document.getElementById('current-load').innerText = data.current_load;
+            
+            const statusEl = document.getElementById('traffic-status');
+            statusEl.innerText = data.status;
+            if(data.status.includes('🔴')) statusEl.className = "mt-2 text-sm font-bold text-red-400";
+            else if(data.status.includes('🟡')) statusEl.className = "mt-2 text-sm font-bold text-yellow-400";
+            else statusEl.className = "mt-2 text-sm font-bold text-emerald-400";
+
+            document.getElementById('total-count').innerText = data.total;
+            
+            const breakdownHTML = Object.entries(data.counts).map(([cls, count]) => 
+                `<div class="flex justify-between bg-slate-800 p-2 rounded border ${cls === 'Pedestrian' ? 'border-orange-500/50' : 'border-slate-700'}">
+                    <span class="${cls === 'Pedestrian' ? 'text-orange-400 font-bold' : 'capitalize'}">${cls}</span>
+                    <span class="font-bold text-emerald-400">${count}</span>
+                </div>`
+            ).join('');
+            document.getElementById('breakdown-list').innerHTML = breakdownHTML || '<i>No objects detected</i>';
+        }
+    </script>
+</body>
+</html>
