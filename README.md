@@ -26,8 +26,8 @@ This project addresses urban traffic challenges by providing a digital tool for 
 ├── templates/          # Frontend assets
 │   └── index.html      # Main dashboard UI
 ├── static/             # Static resource management
-│   ├── uploads/     # Input media storage
-|
+│   ├── uploads/        # Input media storage
+│   └── results/        # Processed image results  
 └── README.md           # Documentation
 ```
 
