@@ -45,7 +45,8 @@ Ensure you have **Python 3.8 or higher** installed on your system.
 ### 2. Clone the Repository
 ```bash
 git clone https://github.com/Tirth543/object-detection-system-for-traffic-monitoring.git
-cd object-detection-system-for-traffic-monitoring```
+cd object-detection-system-for-traffic-monitoring
+```
 ### 3. Install Dependencies
 Install the required Python libraries using pip:
 ```bash
