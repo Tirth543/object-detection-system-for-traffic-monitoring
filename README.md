@@ -67,5 +67,5 @@ The system follows a structured pipeline to process traffic data:
 1. **Input Stage:** The user uploads an image or video through the web dashboard.
 2. **Inference Stage:** The **YOLOv8** model processes the frames using the **PyTorch** backend to detect and classify vehicles.
 3. **Logic Stage:** The system calculates the total vehicle count and determines the traffic density status (Normal, Medium, or Heavy).
-4. **Output Stage:** The processed media is displayed on the web dashboard with real-time bounding boxes and traffic statistics.
+4. **Output Stage:** The processed media is displayed on the web dashboard with bounding boxes and traffic statistics.
 ---
