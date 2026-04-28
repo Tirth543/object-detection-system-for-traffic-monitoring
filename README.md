@@ -26,8 +26,8 @@ This project addresses urban traffic challenges by providing a digital tool for 
 ├── templates/          # Frontend assets
 │   └── index.html      # Main dashboard UI
 ├── static/             # Static resource management
-│   ├── uploads/        # Input media storage
-│   └── results/        # Processed output storage
+│   ├── uploads/     # Input media storage
+|
 └── README.md           # Documentation
 ```
 
@@ -67,6 +67,5 @@ The system follows a structured pipeline to process traffic data:
 1. **Input Stage:** The user uploads an image or video through the web dashboard.
 2. **Inference Stage:** The **YOLOv8** model processes the frames using the **PyTorch** backend to detect and classify vehicles.
 3. **Logic Stage:** The system calculates the total vehicle count and determines the traffic density status (Normal, Medium, or Heavy).
-4. **Output Stage:** The processed media is saved in the `static/results/` folder and displayed on the UI with bounding boxes and real-time statistics.
-
+4. **Output Stage:** The processed media is displayed on the web dashboard with real-time bounding boxes and traffic statistics.
 ---
